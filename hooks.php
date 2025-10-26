@@ -103,7 +103,7 @@ add_hook('DailyCronJob', 1, function() {
                 
                 Capsule::table('tblhosting')
                     ->where('id', $service->id)
-                    ->update(['notes' => Capsule::raw("CONCAT(notes, '" . addslashes($notes) . "')")]);
+                   ->update(['notes' => Capsule::raw("CONCAT(COALESCE(notes, ''), ?)", [$notes])]);
                 
                 $syncedCount++;
             }
